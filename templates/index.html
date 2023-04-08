@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Voice Assistant</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body
+    class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen font-sans"
+  >
+    <div
+      class="container mx-auto max-w-screen-lg p-6 min-h-screen flex flex-col justify-between"
+    >
+      <div>
+        <h1 class="text-5xl font-bold text-white text-center mt-8 mb-4">
+          Chatty
+        </h1>
+        <div class="flex justify-center mb-6">
+          <button
+            id="recordButton"
+            onclick="recordAudio()"
+            class="bg-purple-600 text-white px-8 py-3 rounded-full focus:outline-none shadow-md transition duration-200 ease-in-out transform hover:bg-purple-700 hover:-translate-y-1 hover:scale-105"
+          >
+            Record and Send
+          </button>
+        </div>
+        <div id="loading" style="display: none" class="text-center mb-4">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+        <div
+          id="conversation"
+          class="bg-white w-full mx-auto p-6 rounded-lg shadow-md"
+        >
+          <!-- Messages will be appended here -->
+          <p class="text-gray-400 italic">Hi there ! Say something ...</p>
+        </div>
+      </div>
+      <footer class="text-white text-center mt-8 mb-4">
+        <p>Chatty&reg; 2023</p>
+      </footer>
+    </div>
+
+    <script src="/static/scripts.js"></script>
+  </body>
+</html>
