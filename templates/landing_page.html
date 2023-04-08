@@ -12,8 +12,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
-      // Load Firebase config from JSON file
-      fetch("/static/firebase_config.json")
+      // Load Firebase config from Flask route
+      fetch("/firebase_config")
         .then((response) => response.json())
         .then((firebaseConfig) => {
           // Initialize Firebase
@@ -22,6 +22,8 @@
         .catch((error) => {
           console.error("Error loading Firebase config:", error);
         });
+    </script>
+    
     </script>
     <!-- Add the custom Firebase authentication script -->
     <script src="/static/firebase_auth.js"></script>

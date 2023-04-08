@@ -3,7 +3,6 @@ import openai
 from flask import Flask, request, render_template, send_file
 from pydub import AudioSegment
 from gtts import gTTS
-import config
 from flask import jsonify
 from flask import send_from_directory
 import uuid
@@ -14,19 +13,35 @@ load_dotenv()
 firebase_config = {
     "apiKey": os.environ["FIREBASE_API_KEY"],
     "authDomain": os.environ["FIREBASE_AUTH_DOMAIN"],
+    "databaseURL": os.environ["FIREBASE_DATABASE_URL"],
     "projectId": os.environ["FIREBASE_PROJECT_ID"],
     "storageBucket": os.environ["FIREBASE_STORAGE_BUCKET"],
     "messagingSenderId": os.environ["FIREBASE_MESSAGING_SENDER_ID"],
     "appId": os.environ["FIREBASE_APP_ID"],
+    "measurementId": os.environ["FIREBASE_MEASUREMENT_ID"],
 }
 
-# Set your OpenAI API key
-openai.api_key = config.OPENAI_API_KEY
+openai.api_key = os.environ["OPENAI_API_KEY"]
+
 
 app = Flask(__name__)
 
 # Replace the global messages variable with a dictionary to store multiple chat sessions
 chat_sessions = {}
+
+@app.route("/firebase_config", methods=["GET"])
+def firebase_config():
+    config = {
+        "apiKey": os.environ["FIREBASE_API_KEY"],
+        "authDomain": os.environ["FIREBASE_AUTH_DOMAIN"],
+        "databaseURL": os.environ["FIREBASE_DATABASE_URL"],
+        "projectId": os.environ["FIREBASE_PROJECT_ID"],
+        "storageBucket": os.environ["FIREBASE_STORAGE_BUCKET"],
+        "messagingSenderId": os.environ["FIREBASE_MESSAGING_SENDER_ID"],
+        "appId": os.environ["FIREBASE_APP_ID"],
+        "measurementId": os.environ["FIREBASE_MEASUREMENT_ID"],
+    }
+    return jsonify(config)
 
 # Generate a new chat session and return the session ID
 @app.route("/new_session", methods=["GET"])
