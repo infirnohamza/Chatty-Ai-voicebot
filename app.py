@@ -8,11 +8,14 @@ from flask import send_from_directory
 import uuid
 from dotenv import load_dotenv
 import json
-from firebase_admin import credentials
+from firebase_admin import credentials, storage
+import firebase_admin
+from flask_cors import CORS
 
+app = Flask(__name__)
+CORS(app)
 
 load_dotenv()
-
 
 firebase_credentials = {
     "type": os.environ["FIREBASE_TYPE"],
@@ -28,7 +31,9 @@ firebase_credentials = {
 }
 
 cred = credentials.Certificate(firebase_credentials)
-
+firebase_app = firebase_admin.initialize_app(cred, {
+    'storageBucket': os.environ["FIREBASE_STORAGE_BUCKET"],
+})
 
 firebase_config = {
     "apiKey": os.environ["FIREBASE_API_KEY"],
@@ -44,7 +49,6 @@ firebase_config = {
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
-app = Flask(__name__)
 
 # Replace the global messages variable with a dictionary to store multiple chat sessions
 chat_sessions = {}
@@ -75,15 +79,6 @@ def new_session():
     ]
     return jsonify({"session_id": session_id})
 
-# Delete a chat session by session ID
-@app.route("/delete_session/<session_id>", methods=["DELETE"])
-def delete_session(session_id):
-    if session_id in chat_sessions:
-        del chat_sessions[session_id]
-        return jsonify({"status": "success", "message": "Chat session deleted"})
-    else:
-        return jsonify({"status": "error", "message": "Chat session not found"}), 404
-
 def convert_audio_to_wav(input_file, output_file):
     audio = AudioSegment.from_file(input_file)
     audio.export(output_file, format="wav")
@@ -95,6 +90,7 @@ def landing():
 @app.route("/app", methods=["GET"])
 def index():
     return render_template("index.html")
+
 # Add this new route for index.html
 @app.route('/index')
 def serve_index():
@@ -127,8 +123,6 @@ def chat(session_id):
     tts = gTTS(text=completion.choices[0].message["content"], lang='en')
     audio_filename = f'response_{len(messages)//2}.mp3'
     tts.save(f'audio_files/{audio_filename}')
-
-
 
     # Return transcriptions and audio file as JSON
     return jsonify({

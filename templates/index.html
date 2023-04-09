@@ -28,6 +28,21 @@
           >
             Record and Send
           </button>
+          <button
+            id="createSessionButton"
+            onclick="saveSessionToFirebase(sessionId)"
+            class="bg-green-600 text-white ml-4 px-8 py-3 rounded-full focus:outline-none shadow-md transition duration-200 ease-in-out transform hover:bg-green-700 hover:-translate-y-1 hover:scale-105"
+          >
+            Create Session
+          </button>
+          <button
+            id="downloadSessionButton"
+            onclick="downloadSession(sessionId)"
+            disabled
+            class="bg-blue-600 text-white ml-4 px-8 py-3 rounded-full focus:outline-none shadow-md transition duration-200 ease-in-out transform hover:bg-blue-700 hover:-translate-y-1 hover:scale-105"
+          >
+            Download Session
+          </button>
         </div>
         <div id="loading" style="display: none" class="text-center mb-4">
           <span class="dot"></span>
@@ -40,7 +55,7 @@
           class="bg-white w-full mx-auto p-6 rounded-lg shadow-md"
         >
           <!-- Messages will be appended here -->
-          <p class="text-gray-400 italic">Hi there ! Say something ...</p>
+          <p class="text-gray-400 italic">Hi there! Say something...</p>
         </div>
       </div>
       <footer class="text-white text-center mt-8 mb-4">
@@ -49,5 +64,7 @@
     </div>
 
     <script src="/static/scripts.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
   </body>
 </html>
