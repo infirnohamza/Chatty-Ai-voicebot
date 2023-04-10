@@ -4,14 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
-flask-cors = "*"
-gunicorn = "*"
-openai = "*"
-pydub = "*"
-gtts = "*"
-python-dotenv = "*"
-firebase-admin = "*"
+Flask = "==2.1.1"
+Flask-Cors = "==3.1.1"
+gunicorn = "==20.1.0"
+openai = "==0.27.0"
+pydub = "==0.25.1"
+gTTS = "==2.3.0"
+python-dotenv = "==0.19.2"
+firebase-admin = "==6.0.0"
 
 [dev-packages]
 
