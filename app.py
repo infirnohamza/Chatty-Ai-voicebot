@@ -48,7 +48,10 @@ firebase_config = {
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
-
+# Configure PyDub to use the correct paths for FFmpeg and FFprobe
+AudioSegment.converter = os.environ.get('FFMPEG_PATH', 'ffmpeg')
+AudioSegment.ffmpeg = os.environ.get('FFMPEG_PATH', 'ffmpeg')
+AudioSegment.ffprobe = os.environ.get('FFPROBE_PATH', 'ffprobe')
 
 # Replace the global messages variable with a dictionary to store multiple chat sessions
 chat_sessions = {}
