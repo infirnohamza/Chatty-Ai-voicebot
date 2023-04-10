@@ -101,7 +101,8 @@ def serve_index():
 
 # Create audio_files directory if it doesn't exist
 if not os.path.exists('audio_files'):
-    os.makedirs('audio_files')
+    os.makedirs('audio_files', exist_ok=True)
+
 
 @app.route("/chat/<session_id>", methods=["POST"])
 def chat(session_id):
